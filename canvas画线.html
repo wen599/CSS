@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas画线</title>
+    <style type="text/css">
+        *{
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+        canvas{
+            outline:1px solid blue; 
+            display: block; 
+         }
+         div{
+             position: absolute;
+        
+             left: 50%;
+             
+         }
+         body{
+             position: relative;
+             overflow: hidden;
+         }
+    </style>
+</head>
+<body onload="drow()" >
+    <div>大小：<input type="text" id="size"></div>
+    <canvas id="canvas" height="200" width="200" >
+        
+    </canvas>
+    
+ <script type="text/javascript">
+        let drow=function(){
+        
+         let canvas = document.getElementById("canvas");
+          canvas.width=document.documentElement.clientWidth;
+          canvas.height=document.documentElement.clientHeight;
+         let ctx=canvas.getContext("2d");
+         let log=false;
+         ctx.lineJoin='round';
+         ctx.lineCap="round";
+         canvas.ontouchstart=function(e){
+             console.log(1111);
+            log=true;  
+            ctx.lineWidth=document.getElementById("size").value;
+            ctx.beginPath();
+             ctx.moveTo(e.touches[0].clientX,e.touches[0].clientY);
+         }
+         canvas.ontouchmove=function(e){  
+            console.log(2333);     
+              if(log===true){
+            ctx.lineTo(e.touches[0].clientX,e.touches[0].clientY); 
+            ctx.stroke();
+            }
+
+         }
+         canvas.ontouchend=function(){
+            log=false;
+         }
+         canvas.onmousedown=function(e){
+            ctx.lineWidth=document.getElementById("size").value;
+             log=true;
+             ctx.beginPath();
+             ctx.moveTo(e.clientX,e.clientY);
+         }
+            canvas.onmousemove=function(e){  
+            if(log===true){
+            ctx.lineTo(e.clientX,e.clientY); 
+            ctx.stroke();
+            }
+         }
+        
+         canvas.onmouseup=function(){
+            log=false;
+         }
+    }
+ </script>
+</html>
